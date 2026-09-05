@@ -2,33 +2,33 @@
    Values extracted from ul.cmp-image-list on wknd.site. Reused across homepage,
    adventure-listing, and content-landing, so kept general (mobile-first, auto-fill grid). */
 
-/* category filter tab strip (adventures listing only) */
+/* category filter tab strip (adventures listing only) — WKND: active tab is a
+   dark filled box, inactive tabs are plain text, no strip border. */
 .cards-teaser .cards-teaser-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 28px;
+  align-items: center;
+  gap: 8px 24px;
   margin: 0 0 32px;
-  border-bottom: 1px solid #d8d8d8;
 }
 
 .cards-teaser .cards-teaser-tab {
   background: none;
   border: 0;
-  border-bottom: 3px solid transparent;
   margin: 0;
-  padding: 12px 4px;
+  padding: 8px 16px;
   font: inherit;
-  font-size: var(--body-font-size-xs);
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: normal;
   text-transform: uppercase;
-  color: #767676;
+  color: var(--text-color);
   cursor: pointer;
 }
 
 .cards-teaser .cards-teaser-tab[aria-selected='true'] {
-  color: var(--text-color);
-  border-bottom-color: #ffea00;
+  background-color: var(--text-color);
+  color: var(--background-color);
 }
 
 .cards-teaser ul {
@@ -63,12 +63,14 @@
   object-fit: cover;
 }
 
-/* text cell: title link + bare description text share one <p> after decoration */
+/* text cell: title link + bare description text share one <p> after decoration.
+   WKND: description is uppercase gray (#696969), 14/21. */
 .cards-teaser .cards-teaser-card-body {
   margin-top: 16px;
   font-size: 14px;
   line-height: 21px;
-  color: var(--text-color);
+  text-transform: uppercase;
+  color: #696969;
 }
 
 .cards-teaser .cards-teaser-card-body p {

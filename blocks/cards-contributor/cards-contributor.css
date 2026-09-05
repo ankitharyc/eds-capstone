@@ -22,10 +22,11 @@ main .section.cards-contributor-container > div {
   padding: 0;
 }
 
-/* section headings ("Our Contributors", "WKND Guides") span the full row */
+/* section headings ("Our Contributors", "WKND Guides") span the full row,
+   left-aligned to match the WKND source */
 main .section.cards-contributor-container > .default-content-wrapper {
   grid-column: 1 / -1;
-  text-align: center;
+  text-align: left;
 }
 
 @media (width >= 900px) {
@@ -115,18 +116,18 @@ main .section.cards-contributor-container > .default-content-wrapper {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
-  padding: 0 6px;
+  width: 36px;
+  height: 24px;
   color: #ebebeb;
-  font-family: var(--body-font-family);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  text-transform: uppercase;
   text-decoration: none;
+}
+
+.cards-contributor .cards-contributor-social a svg {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
 .cards-contributor .cards-contributor-social a:hover {
   color: #fff;
-  text-decoration: underline;
 }
