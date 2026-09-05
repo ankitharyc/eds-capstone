@@ -52,6 +52,16 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
+  // Resolve relative image paths (images/...) to a root-relative path so they
+  // load regardless of the current page's URL depth. The dev server and DA/EDS
+  // both serve uploaded assets at the site root (/images/...).
+  nav.querySelectorAll('img[src]').forEach((img) => {
+    const src = img.getAttribute('src');
+    if (src && !/^(https?:)?\/\//.test(src) && !src.startsWith('/')) {
+      img.setAttribute('src', `/${src.replace(/^\.?\/*/, '')}`);
+    }
+  });
+
   // Brand: strip button styling from the logo link
   const navBrand = nav.querySelector('.nav-brand');
   if (navBrand) {
