@@ -1,0 +1,132 @@
+/* Block: cards-contributor — profile/contributor cards (WKND) */
+
+/*
+ * Each contributor is authored as its own cards-contributor block, so all the
+ * block wrappers are siblings inside one section (.cards-contributor-container),
+ * alongside the section headings. Turn that section into the card grid so the
+ * separate blocks line up as a grid of profile cards and the headings span full width.
+ */
+main .section.cards-contributor-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px 24px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+/* neutralise the per-wrapper max-width/padding from styles.css so the grid controls layout */
+main .section.cards-contributor-container > div {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* section headings ("Our Contributors", "WKND Guides") span the full row */
+main .section.cards-contributor-container > .default-content-wrapper {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+@media (width >= 900px) {
+  main .section.cards-contributor-container {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 32px 24px;
+    padding: 0 32px;
+  }
+}
+
+/* the block itself carries a single card */
+.cards-contributor > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cards-contributor > ul > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+}
+
+/* circular portrait */
+.cards-contributor .cards-contributor-card-image {
+  line-height: 0;
+  margin: 7px 0;
+}
+
+.cards-contributor .cards-contributor-card-image picture {
+  display: inline-block;
+}
+
+.cards-contributor .cards-contributor-card-image img {
+  width: 164px;
+  height: 164px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* text body */
+.cards-contributor .cards-contributor-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+}
+
+/* contributor name */
+.cards-contributor .cards-contributor-card-body h3 {
+  margin: 0 0 6px;
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+  color: var(--text-color);
+}
+
+/* role / title */
+.cards-contributor .cards-contributor-card-body h5 {
+  margin: 0 0 4px;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+/* dark social bar with light icons/links */
+.cards-contributor .cards-contributor-social {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  background-color: var(--text-color);
+}
+
+.cards-contributor .cards-contributor-social a:any-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  padding: 0 6px;
+  color: #ebebeb;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.cards-contributor .cards-contributor-social a:hover {
+  color: #fff;
+  text-decoration: underline;
+}

@@ -1,0 +1,38 @@
+{
+  "variantName": "columns-featured",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-09-05T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/us/en.html",
+    "originPage": "WKND homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "grey",
+    "density": "wide",
+    "purpose": "feature",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "image + eyebrow + heading + description + CTA",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "featured article callouts",
+      "single item image-plus-text side-by-side layouts",
+      "promotional feature panels"
+    ],
+    "notSuitableFor": [
+      "repeating item grids (use cards)",
+      "rotating banners (use carousel)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/us/en", "/us/en/magazine"],
+    "reuseCount": 2,
+    "lastUsed": "2026-09-05T00:00:00.000Z"
+  }
+}

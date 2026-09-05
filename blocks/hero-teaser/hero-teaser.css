@@ -1,0 +1,77 @@
+/* Block: hero-teaser
+ * WKND adventures-listing hero: full-bleed background photo with a white
+ * content card (heading + description) overlapping the bottom of the image.
+ * Values extracted from source .teaser.cmp-teaser--hero computed styles.
+ */
+
+/* Full-bleed: the wrapper IS the .section > div that carries max-width:1200px.
+ * Override it (2 classes beat `main > .section > div`) so the image spans
+ * edge-to-edge. Sibling wrappers keep their constraint (this block shares its
+ * section with cards-teaser). */
+.section > .hero-teaser-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
+.hero-teaser {
+  position: relative;
+}
+
+/* --- Image row (full-bleed photo) --- */
+.hero-teaser > div:first-child {
+  margin: 0;
+}
+
+.hero-teaser > div:first-child picture {
+  display: block;
+}
+
+.hero-teaser > div:first-child img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9; /* source mobile 390x219 */
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* --- Content card (white panel with heading + description) --- */
+.hero-teaser > div:last-child {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 14px; /* source mobile content padding */
+  background-color: var(--background-color);
+}
+
+.hero-teaser h2 {
+  margin: 18px 0 0;
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 54px;
+  color: var(--text-color);
+}
+
+.hero-teaser p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 31.5px;
+  color: var(--text-color);
+}
+
+@media (width >= 900px) {
+  .hero-teaser > div:first-child img {
+    aspect-ratio: 2 / 1; /* source desktop 1280x640 */
+  }
+
+  /* White card centered at page width, overlapping the image bottom. */
+  .hero-teaser > div:last-child {
+    max-width: 1200px;
+    margin: -180px auto 0; /* source overlap */
+    padding: 0 28px; /* source desktop content padding */
+  }
+}

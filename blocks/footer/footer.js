@@ -1,20 +1,37 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
+/**
+ * Loads the footer plain-html fragment's DOM, trying the localhost path first
+ * and then the DA/EDS production root path. Metadata-independent by design.
+ * @returns {Promise<Document|null>}
+ */
+async function loadFooterFragment() {
+  // metadata-independent: /content first (localhost), then root (DA/EDS prod)
+  let resp = await fetch('/content/footer.plain.html');
+  if (!resp.ok) resp = await fetch('/footer.plain.html');
+  if (!resp.ok) return null;
+  const html = await resp.text();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc;
+}
 
 /**
- * loads and decorates the footer
+ * Loads and decorates the footer.
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
-  // load footer as fragment
-  const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
+  const doc = await loadFooterFragment();
+  if (!doc) return;
 
-  // decorate footer DOM
   block.textContent = '';
   const footer = document.createElement('div');
-  while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
+  footer.className = 'footer-content';
+  while (doc.body.firstElementChild) footer.append(doc.body.firstElementChild);
+
+  // Label sections so CSS can style them (brand, nav, social, legal)
+  const sections = footer.children;
+  const classNames = ['footer-brand', 'footer-nav', 'footer-social', 'footer-legal'];
+  [...sections].forEach((section, i) => {
+    if (classNames[i]) section.classList.add(classNames[i]);
+  });
 
   block.append(footer);
 }

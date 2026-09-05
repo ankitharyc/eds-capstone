@@ -1,0 +1,94 @@
+/* tabs-detail — visual design migrated from WKND cmp-tabs (adventure trip details).
+   Values extracted from source computed styles. See migration-work/tabs-detail-extracted.css */
+
+/* Tab strip (ol.cmp-tabs__tablist -> div[role=tablist]) */
+.tabs-detail .tabs-detail-list {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  margin: 18px 0;
+  padding: 0;
+  list-style: none;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Individual tab (li.cmp-tabs__tab -> button) — inactive state */
+.tabs-detail .tabs-detail-list button {
+  flex: 0 0 auto;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: clip;
+  overflow: visible;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tabs-detail .tabs-detail-list button p {
+  margin: 0;
+}
+
+/* Active tab (li.cmp-tabs__tab--active) — solid dark filled box */
+.tabs-detail .tabs-detail-list button[aria-selected='true'] {
+  background-color: var(--text-color);
+  color: var(--background-color);
+  cursor: default;
+}
+
+/* Tab panel (div.cmp-tabs__tabpanel) — no border/padding/background */
+.tabs-detail .tabs-detail-panel {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  overflow: auto;
+}
+
+.tabs-detail .tabs-detail-panel[aria-hidden='true'] {
+  display: none;
+}
+
+/* Panel content */
+/* stylelint-disable-next-line no-descending-specificity */
+.tabs-detail .tabs-detail-panel p {
+  margin-top: 0;
+  margin-bottom: 13.5px;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  line-height: 45px;
+}
+
+.tabs-detail .tabs-detail-panel ul,
+.tabs-detail .tabs-detail-panel ol {
+  margin: 7px 0 13.5px;
+  padding-left: 1.5em;
+  color: var(--text-color);
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.tabs-detail .tabs-detail-panel li {
+  margin: 0;
+}
+
+/* Inline image in panel — full column width */
+.tabs-detail .tabs-detail-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 7px 0;
+  border-radius: 0;
+}
