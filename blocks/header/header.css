@@ -1,55 +1,30 @@
-/* WKND header and nav layout (mobile-first) */
+/* WKND header (mobile-first): dark utility strip on top, white main bar below.
+   Nav collapses into a left slide-in drawer on mobile. */
 header,
 header .header,
 header .nav-wrapper {
   font-family: 'Source Sans Pro', 'Helvetica Neue', helvetica, arial, sans-serif;
 }
 
-/*
- * Source WKND header is fixed and transparent, overlaying the hero. On mobile
- * the nav collapses behind a hamburger (dark drawer); on desktop the primary
- * nav shows inline. A gradient scrim keeps the mobile bar legible where no dark
- * hero sits behind it.
- */
 header .nav-wrapper {
   width: 100%;
   z-index: 2;
-  position: fixed;
-  background-color: transparent;
-  background-image: linear-gradient(to bottom, rgb(0 0 0 / 55%), rgb(0 0 0 / 0%));
-  transition: background-color 0.2s ease;
-}
-
-header .nav-wrapper.is-scrolled {
-  background-color: #202020;
-  background-image: none;
+  position: relative;
+  background-color: #fff;
+  padding-top: 37px; /* clears the fixed dark utility strip */
 }
 
 header nav {
   box-sizing: border-box;
-  font-family: 'Source Sans Pro', 'Helvetica Neue', helvetica, arial, sans-serif;
   display: grid;
   grid-template:
-    'hamburger brand tools' var(--nav-height, 64px)
-    'sections sections sections' 1fr / auto 1fr auto;
+    'hamburger brand search' auto / auto 1fr auto;
   align-items: center;
   gap: 0 16px;
-  margin: auto;
-  max-width: 1248px;
-  height: var(--nav-height, 64px);
-  padding: 0 24px;
-  color: #ebebeb;
-}
-
-header nav[aria-expanded='true'] {
-  grid-template:
-    'hamburger brand' var(--nav-height, 64px)
-    'sections sections' 1fr
-    'tools tools' auto / auto 1fr;
-  overflow-y: auto;
-  min-height: 100dvh;
-  background-color: #202020;
-  padding: 0;
+  margin: 0;
+  padding: 12px 20px;
+  background-color: #fff;
+  color: #202020;
 }
 
 header nav p {
@@ -68,22 +43,21 @@ header nav ul {
   padding-left: 0;
 }
 
-/* hamburger (mobile only) */
+/* ---- Hamburger (mobile) ---- */
 header nav .nav-hamburger {
   grid-area: hamburger;
-  height: 22px;
   display: flex;
   align-items: center;
 }
 
 header nav .nav-hamburger button {
   height: 22px;
+  width: 26px;
   margin: 0;
   border: 0;
-  border-radius: 0;
   padding: 0;
   background: transparent;
-  color: inherit;
+  color: #202020;
   cursor: pointer;
 }
 
@@ -93,54 +67,29 @@ header nav .nav-hamburger-icon::after {
   box-sizing: border-box;
   display: block;
   position: relative;
-  width: 20px;
+  width: 22px;
+  height: 2px;
+  background: currentcolor;
+  border-radius: 2px;
 }
 
 header nav .nav-hamburger-icon::before,
 header nav .nav-hamburger-icon::after {
   content: '';
   position: absolute;
-  background: currentcolor;
 }
 
-header nav[aria-expanded='false'] .nav-hamburger-icon,
-header nav[aria-expanded='false'] .nav-hamburger-icon::before,
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  height: 2px;
-  border-radius: 2px;
-  background: currentcolor;
+header nav .nav-hamburger-icon::before {
+  top: -7px;
+  width: 22px;
 }
 
-header nav[aria-expanded='false'] .nav-hamburger-icon::before {
-  top: -6px;
+header nav .nav-hamburger-icon::after {
+  top: 7px;
+  width: 14px;
 }
 
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  top: 6px;
-}
-
-header nav[aria-expanded='true'] .nav-hamburger-icon {
-  height: 22px;
-}
-
-header nav[aria-expanded='true'] .nav-hamburger-icon::before,
-header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: 3px;
-  left: 1px;
-  transform: rotate(45deg);
-  transform-origin: 2px 1px;
-  width: 24px;
-  height: 2px;
-  border-radius: 2px;
-}
-
-header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: unset;
-  bottom: 3px;
-  transform: rotate(-45deg);
-}
-
-/* brand */
+/* ---- Brand ---- */
 header .nav-brand {
   grid-area: brand;
   display: flex;
@@ -148,89 +97,137 @@ header .nav-brand {
 }
 
 header nav .nav-brand img {
-  width: 128px;
-  height: 48px;
-  object-fit: contain;
+  width: 110px;
+  height: auto;
 }
 
-/* keep hamburger + logo inset when the mobile drawer removes nav padding */
-header nav[aria-expanded='true'] .nav-hamburger,
-header nav[aria-expanded='true'] .nav-brand {
-  padding-left: 24px;
+/* ---- Search (white bar, right) ---- */
+header nav .nav-search {
+  grid-area: search;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f2f2f2;
+  padding: 10px 14px;
 }
 
-/* sections (the promoted <ul> carries .nav-sections) */
+header nav .nav-search-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  border: 2px solid #202020;
+  border-radius: 50%;
+  position: relative;
+}
+
+header nav .nav-search-icon::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  bottom: -3px;
+  width: 8px;
+  height: 2px;
+  background: #202020;
+  transform: rotate(45deg);
+}
+
+header nav .nav-search input {
+  border: 0;
+  background: transparent;
+  color: #202020;
+  font: inherit;
+  font-size: var(--body-font-size-xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  width: 120px;
+}
+
+header nav .nav-search input::placeholder {
+  color: #767676;
+}
+
+/* ---- Sections: left slide-in drawer (mobile) ---- */
 header nav ul.nav-sections {
-  grid-area: sections;
-  display: none;
-  visibility: hidden;
+  grid-area: unset;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 78vw;
+  max-width: 320px;
+  height: 100dvh;
+  background-color: #202020;
+  color: #ebebeb;
+  padding: 64px 0 24px;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  overflow-y: auto;
+  z-index: 5;
 }
 
 header nav[aria-expanded='true'] ul.nav-sections {
-  display: block;
-  visibility: visible;
-  align-self: start;
-  width: 100%;
+  transform: translateX(0);
 }
 
 header nav ul.nav-sections > li {
-  font-weight: 600;
-  padding: 12px 24px;
-  border-bottom: 1px solid rgb(255 255 255 / 15%);
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
 }
 
 header nav ul.nav-sections a {
   display: block;
-  width: 100%;
+  padding: 16px 24px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: var(--body-font-size-s);
-  font-weight: 600;
+  color: #ebebeb;
 }
 
-/* tools (mobile: inside drawer) */
-header nav .nav-tools {
-  grid-area: tools;
-  display: none;
-  visibility: hidden;
+/* ---- Tools: dark utility strip (Sign In + locale), rendered on top ---- */
+header .nav-tools {
+  grid-area: unset;
+  order: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background-color: #202020;
+  color: #ebebeb;
+  padding: 8px 20px;
+  z-index: 4;
 }
 
-header nav[aria-expanded='true'] .nav-tools {
-  display: block;
-  visibility: visible;
-  padding: 0 24px 24px;
+header .nav-tools > p {
+  margin: 0;
 }
 
-header nav .nav-search input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 8px 12px;
-  margin: 12px 0;
-  border: 1px solid rgb(255 255 255 / 30%);
-  border-radius: 4px;
-  background: rgb(235 235 235 / 54%);
-  color: inherit;
+header .nav-tools a:any-link {
+  color: #ebebeb;
+  font-size: var(--body-font-size-xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-header nav .nav-tools > p {
-  padding: 12px 0;
-}
-
-header nav .nav-locale {
+header .nav-tools .nav-locale {
   position: relative;
-  padding: 12px 0;
 }
 
 header nav a.nav-locale-toggle {
-  display: inline-block;
-  background: transparent;
-  color: inherit;
-  border: 1px solid rgb(255 255 255 / 30%);
-  border-radius: 4px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font: inherit;
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ebebeb;
+  font-size: var(--body-font-size-xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+header nav a.nav-locale-toggle img {
+  width: 22px;
+  height: auto;
+  display: block;
 }
 
 header nav .nav-locale-list {
@@ -239,137 +236,103 @@ header nav .nav-locale-list {
 
 header nav .nav-locale-toggle[aria-expanded='true'] + .nav-locale-list {
   display: block;
-  padding: 8px 0;
+  position: absolute;
+  top: 130%;
+  right: 0;
+  min-width: 120px;
+  padding: 8px 12px;
+  background-color: #202020;
+  border: 1px solid rgb(255 255 255 / 20%);
+  z-index: 6;
 }
 
 header nav ul.nav-locale-list > li {
   padding: 6px 0;
-  font-size: var(--body-font-size-s);
 }
 
-/* ---- Desktop: inline nav, transparent bar, dark text (matches source) ---- */
+/* stylelint-disable-next-line no-descending-specificity */
+header nav ul.nav-locale-list a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ebebeb;
+  font-size: var(--body-font-size-xs);
+}
+
+/* ---- Desktop: dark utility strip + white bar with inline nav ---- */
 @media (width >= 900px) {
-  /* two-row header: utility (tools) top-right, main row below with logo + inline nav */
   header nav {
-    display: grid;
     grid-template:
-      '. tools' auto
-      'brand sections' auto / auto 1fr;
-    align-items: center;
-    gap: 4px 32px;
+      'brand sections search' auto / auto 1fr auto;
+    gap: 0 24px;
     max-width: 1264px;
-    height: auto;
-    padding: 12px 36px;
-    color: #ebebeb;
+    margin: auto;
+    padding: 20px 40px;
   }
 
-  header nav[aria-expanded='true'] {
-    min-height: 0;
-    overflow: visible;
-    background-color: transparent;
-    padding: 12px 36px;
+  header .nav-wrapper {
+    padding-top: 45px;
   }
 
-  /* hamburger hidden on desktop */
   header nav .nav-hamburger {
     display: none;
-    visibility: hidden;
   }
 
-  header nav .nav-brand {
-    padding-left: 0;
+  header nav .nav-brand img {
+    width: 150px;
   }
 
-  /* main nav: inline horizontal, right-aligned next to logo.
-     Selectors match the mobile [aria-expanded='true'] specificity so the
-     desktop layout wins even though the boilerplate keeps aria-expanded=true. */
+  /* inline nav on the white bar */
   header nav ul.nav-sections,
   header nav[aria-expanded='true'] ul.nav-sections {
     grid-area: sections;
-    display: flex;
-    visibility: visible;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 32px;
-    white-space: nowrap;
+    position: static;
     width: auto;
-    align-self: center;
+    max-width: none;
+    height: auto;
+    background: transparent;
+    color: #202020;
+    padding: 0;
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 36px;
+    overflow: visible;
   }
 
   header nav ul.nav-sections > li {
-    padding: 0;
     border-bottom: 0;
-    font-weight: 400;
+  }
+
+  /* HOME is a drawer-only item on mobile; hide it in the desktop inline bar */
+  header nav ul.nav-sections > li:first-child {
+    display: none;
   }
 
   header nav ul.nav-sections a {
     display: inline;
-    width: auto;
-    color: #ebebeb;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+    padding: 0;
+    color: #202020;
     font-size: var(--body-font-size-xs);
-    font-weight: 400;
   }
 
   header nav ul.nav-sections a:hover {
-    color: #ffea00;
+    color: #767676;
   }
 
-  /* utility row: Sign In + language, top-right, light-on-transparent */
-  header nav .nav-tools,
-  header nav[aria-expanded='true'] .nav-tools {
-    grid-area: tools;
-    display: flex;
-    visibility: visible;
-    align-items: center;
+  /* utility strip spans full width; content aligned to the max-width band */
+  header .nav-tools {
     justify-content: flex-end;
-    gap: 16px;
-    padding: 0;
-  }
-
-  header nav .nav-tools > p {
-    padding: 0;
-    white-space: nowrap;
-    font-size: var(--body-font-size-xs);
+    gap: 28px;
+    padding: 10px calc((100vw - 1264px) / 2 + 40px);
   }
 
   header nav .nav-search {
-    order: 3;
+    padding: 12px 16px;
   }
 
   header nav .nav-search input {
-    width: 160px;
-    margin: 0;
-    font-size: var(--body-font-size-xs);
-  }
-
-  header nav .nav-locale {
-    padding: 0;
-  }
-
-  header nav a.nav-locale-toggle {
-    border: 0;
-    padding: 0;
-    font-size: var(--body-font-size-xs);
-    text-transform: uppercase;
-  }
-
-  header nav .nav-locale-toggle[aria-expanded='true'] + .nav-locale-list {
-    display: block;
-    position: absolute;
-    top: 130%;
-    right: 0;
-    width: 120px;
-    padding: 8px 12px;
-    background-color: #202020;
-    border: 1px solid rgb(255 255 255 / 20%);
-    border-radius: 4px;
-    z-index: 3;
-  }
-
-  /* stylelint-disable-next-line no-descending-specificity */
-  header nav ul.nav-locale-list > li a {
-    color: #ebebeb;
+    width: 140px;
   }
 }
