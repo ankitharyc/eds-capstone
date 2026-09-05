@@ -77,7 +77,7 @@
   margin: 0;
 }
 
-/* title link — bold, uppercase, own line (matches WKND teaser cards) */
+/* title link — black, bold, uppercase, own line (matches WKND teaser cards) */
 .cards-teaser .cards-teaser-card-body a {
   display: block;
   margin-bottom: 8px;
