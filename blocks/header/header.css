@@ -2,15 +2,14 @@
 header,
 header .header,
 header .nav-wrapper {
-  color: #ebebeb;
   font-family: 'Source Sans Pro', 'Helvetica Neue', helvetica, arial, sans-serif;
 }
 
 /*
- * Transparent-over-hero by default (matches source WKND header). A dark
- * gradient scrim keeps nav text legible even where no dark hero sits behind
- * the fixed header. Turns solid on scroll (.is-scrolled) or when the mobile
- * menu is open.
+ * Source WKND header is fixed and transparent, overlaying the hero. On mobile
+ * the nav collapses behind a hamburger (dark drawer); on desktop the primary
+ * nav shows inline. A gradient scrim keeps the mobile bar legible where no dark
+ * hero sits behind it.
  */
 header .nav-wrapper {
   width: 100%;
@@ -39,6 +38,7 @@ header nav {
   max-width: 1248px;
   height: var(--nav-height, 64px);
   padding: 0 24px;
+  color: #ebebeb;
 }
 
 header nav[aria-expanded='true'] {
@@ -68,7 +68,7 @@ header nav ul {
   padding-left: 0;
 }
 
-/* hamburger */
+/* hamburger (mobile only) */
 header nav .nav-hamburger {
   grid-area: hamburger;
   height: 22px;
@@ -188,12 +188,7 @@ header nav ul.nav-sections a {
   font-weight: 600;
 }
 
-/* nested dropdown (Home > Magazine/Adventures/FAQs/About Us) */
-header nav ul.nav-sections .nav-drop > ul {
-  padding-left: 16px;
-}
-
-/* tools */
+/* tools (mobile: inside drawer) */
 header nav .nav-tools {
   grid-area: tools;
   display: none;
@@ -203,6 +198,7 @@ header nav .nav-tools {
 header nav[aria-expanded='true'] .nav-tools {
   display: block;
   visibility: visible;
+  padding: 0 24px 24px;
 }
 
 header nav .nav-search input {
@@ -212,7 +208,7 @@ header nav .nav-search input {
   margin: 12px 0;
   border: 1px solid rgb(255 255 255 / 30%);
   border-radius: 4px;
-  background: transparent;
+  background: rgb(235 235 235 / 54%);
   color: inherit;
 }
 
@@ -251,84 +247,112 @@ header nav ul.nav-locale-list > li {
   font-size: var(--body-font-size-s);
 }
 
+/* ---- Desktop: inline nav, transparent bar, dark text (matches source) ---- */
 @media (width >= 900px) {
+  /* two-row header: utility (tools) top-right, main row below with logo + inline nav */
   header nav {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template:
+      '. tools' auto
+      'brand sections' auto / auto 1fr;
     align-items: center;
-    gap: 0 32px;
+    gap: 4px 32px;
     max-width: 1264px;
-    padding: 0 32px;
+    height: auto;
+    padding: 12px 36px;
+    color: #ebebeb;
   }
 
   header nav[aria-expanded='true'] {
     min-height: 0;
     overflow: visible;
+    background-color: transparent;
+    padding: 12px 36px;
   }
 
+  /* hamburger hidden on desktop */
   header nav .nav-hamburger {
     display: none;
     visibility: hidden;
   }
 
-  header nav ul.nav-sections {
-    display: flex;
-    visibility: visible;
-    white-space: nowrap;
-    flex: 1 1 auto;
-    gap: 28px;
-    justify-content: center;
+  header nav .nav-brand {
+    padding-left: 0;
   }
 
+  /* main nav: inline horizontal, right-aligned next to logo.
+     Selectors match the mobile [aria-expanded='true'] specificity so the
+     desktop layout wins even though the boilerplate keeps aria-expanded=true. */
+  header nav ul.nav-sections,
   header nav[aria-expanded='true'] ul.nav-sections {
-    align-self: unset;
+    grid-area: sections;
+    display: flex;
+    visibility: visible;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 32px;
+    white-space: nowrap;
+    width: auto;
+    align-self: center;
   }
 
   header nav ul.nav-sections > li {
     padding: 0;
     border-bottom: 0;
-    position: relative;
+    font-weight: 400;
   }
 
-  header nav ul.nav-sections .nav-drop > ul {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 150%;
-    padding: 12px 16px;
-    background-color: #202020;
-    border: 1px solid rgb(255 255 255 / 20%);
-    border-radius: 4px;
-    z-index: 3;
+  header nav ul.nav-sections a {
+    display: inline;
+    width: auto;
+    color: #ebebeb;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: var(--body-font-size-xs);
+    font-weight: 400;
   }
 
-  header nav ul.nav-sections .nav-drop[aria-expanded='true'] > ul {
-    display: block;
+  header nav ul.nav-sections a:hover {
+    color: #ffea00;
   }
 
-  header nav ul.nav-sections .nav-drop > ul > li {
-    padding: 6px 0;
-  }
-
-  header nav .nav-tools {
+  /* utility row: Sign In + language, top-right, light-on-transparent */
+  header nav .nav-tools,
+  header nav[aria-expanded='true'] .nav-tools {
+    grid-area: tools;
     display: flex;
     visibility: visible;
     align-items: center;
+    justify-content: flex-end;
     gap: 16px;
-  }
-
-  header nav .nav-search input {
-    width: 160px;
-    margin: 0;
+    padding: 0;
   }
 
   header nav .nav-tools > p {
     padding: 0;
     white-space: nowrap;
+    font-size: var(--body-font-size-xs);
+  }
+
+  header nav .nav-search {
+    order: 3;
+  }
+
+  header nav .nav-search input {
+    width: 160px;
+    margin: 0;
+    font-size: var(--body-font-size-xs);
   }
 
   header nav .nav-locale {
     padding: 0;
+  }
+
+  header nav a.nav-locale-toggle {
+    border: 0;
+    padding: 0;
+    font-size: var(--body-font-size-xs);
+    text-transform: uppercase;
   }
 
   header nav .nav-locale-toggle[aria-expanded='true'] + .nav-locale-list {
@@ -342,5 +366,10 @@ header nav ul.nav-locale-list > li {
     border: 1px solid rgb(255 255 255 / 20%);
     border-radius: 4px;
     z-index: 3;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav ul.nav-locale-list > li a {
+    color: #ebebeb;
   }
 }

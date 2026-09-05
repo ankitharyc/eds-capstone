@@ -26,6 +26,16 @@ export default async function decorate(block) {
   footer.className = 'footer-content';
   while (doc.body.firstElementChild) footer.append(doc.body.firstElementChild);
 
+  // Resolve relative image paths (images/...) to a root-relative path so they
+  // load regardless of the current page's URL depth. The dev server and DA/EDS
+  // both serve uploaded assets at the site root (/images/...).
+  footer.querySelectorAll('img[src]').forEach((img) => {
+    const src = img.getAttribute('src');
+    if (src && !/^(https?:)?\/\//.test(src) && !src.startsWith('/')) {
+      img.setAttribute('src', `/${src.replace(/^\.?\/*/, '')}`);
+    }
+  });
+
   // Label sections so CSS can style them (brand, nav, social, legal)
   const sections = footer.children;
   const classNames = ['footer-brand', 'footer-nav', 'footer-social', 'footer-legal'];
