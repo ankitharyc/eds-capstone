@@ -1,0 +1,53 @@
+/* breadcrumb — WKND trail: uppercase links, yellow arrow separator, current
+   page in regular weight. Sits at the top of the content, above the hero. */
+
+.breadcrumb {
+  margin: 0;
+}
+
+.breadcrumb nav ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumb nav li {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+/* yellow arrow between crumbs */
+.breadcrumb nav li:not(:first-child)::before {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 12px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid #ffea00;
+}
+
+.breadcrumb nav a:any-link {
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.breadcrumb nav a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb nav li[aria-current='page'] {
+  font-weight: 400;
+}

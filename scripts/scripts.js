@@ -74,11 +74,35 @@ function buildWidgetAutoBlocks(main) {
 }
 
 /**
+ * Wraps an authored breadcrumb trail in a breadcrumb block so it picks up the
+ * WKND styling. WKND detail pages import a leading `<ol>` (parent link + current
+ * page) as the first element of the first section; listing pages have none.
+ * @param {Element} main The container element
+ */
+function buildBreadcrumb(main) {
+  const firstSection = main.querySelector(':scope > div');
+  if (!firstSection) return;
+  // a breadcrumb trail is an <ol> near the top of the page: it has links and a
+  // final plain-text item (the current page). It may sit after a lead image.
+  const ol = [...firstSection.querySelectorAll(':scope > ol')].find((list) => {
+    const items = [...list.children];
+    return items.length >= 2
+      && list.querySelector('a')
+      && !items[items.length - 1].querySelector('a');
+  });
+  if (!ol) return;
+  const section = document.createElement('div');
+  section.append(buildBlock('breadcrumb', { elems: [ol] }));
+  main.prepend(section);
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
 function buildAutoBlocks(main) {
   try {
+    buildBreadcrumb(main);
     // auto load `*/fragments/*` references
     const fragments = [...main.querySelectorAll('a[href*="/fragments/"]')].filter((f) => !f.closest('.fragment'));
     if (fragments.length > 0) {
