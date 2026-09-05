@@ -1,0 +1,73 @@
+/* cards-teaser — WKND image-list teaser grid (image top, title + short description)
+   Values extracted from ul.cmp-image-list on wknd.site. Reused across homepage,
+   adventure-listing, and content-landing, so kept general (mobile-first, auto-fill grid). */
+
+.cards-teaser ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.cards-teaser ul > li {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* image cell: uniform cover crop (source rendered 260x200 ≈ 13/10) */
+.cards-teaser .cards-teaser-card-image {
+  line-height: 0;
+}
+
+.cards-teaser .cards-teaser-card-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 13 / 10;
+  object-fit: cover;
+}
+
+/* text cell: title link + bare description text share one <p> after decoration */
+.cards-teaser .cards-teaser-card-body {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--text-color);
+}
+
+.cards-teaser .cards-teaser-card-body p {
+  margin: 0;
+}
+
+/* title link — blue (brand link color via global a:any-link), regular weight, own line */
+.cards-teaser .cards-teaser-card-body a {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.cards-teaser .cards-teaser-card-body a:hover {
+  text-decoration: underline;
+}
+
+/* tablet: two columns */
+@media (width >= 600px) {
+  .cards-teaser ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 14px;
+  }
+}
+
+/* desktop: 4-up auto-fill grid (source ~274px columns, 14px column gap) */
+@media (width >= 900px) {
+  .cards-teaser ul {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 32px 14px;
+  }
+}

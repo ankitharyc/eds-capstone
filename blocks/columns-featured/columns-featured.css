@@ -1,0 +1,116 @@
+/* columns-featured — WKND "Featured Article" panel
+   Source: .teaser.cmp-teaser--featured (values from source computed styles).
+   Decorated DOM:
+     .columns-featured > div (row)
+       > div.columns-featured-img-col  (picture/img)
+       > div.columns-featured-content  (p eyebrow, [h2], p description, p.button-container > a) */
+
+.columns-featured > div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* image */
+.columns-featured img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.columns-featured > div > .columns-featured-img-col {
+  order: 0;
+  padding: 0;
+}
+
+.columns-featured > div > .columns-featured-img-col img {
+  height: 100%;
+}
+
+/* grey content panel */
+.columns-featured > div > .columns-featured-content {
+  order: 1;
+  background-color: var(--light-color); /* #f2f2f2 ~ source #ebebeb */
+  padding: 40px 24px;
+  color: var(--text-color);
+}
+
+/* description paragraph(s) — general rule first (lowest specificity) */
+.columns-featured .columns-featured-content > p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75; /* 24.5px / 14px */
+  color: var(--text-color);
+}
+
+/* eyebrow — first paragraph */
+.columns-featured .columns-featured-content > p:first-child {
+  margin: 0 0 13.5px;
+  font-size: var(--body-font-size-s); /* 18px */
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-color);
+}
+
+/* heading (present when authored with a title) */
+.columns-featured .columns-featured-content h2,
+.columns-featured .columns-featured-content h3 {
+  margin: 18px 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xl); /* 36px */
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+/* CTA — WKND yellow button.
+   The CTA link is the last paragraph's anchor. EDS may or may not add the
+   .button class, so target both the plain anchor and the decorated button. */
+.columns-featured .columns-featured-content > p:last-child {
+  margin: 18px 0 0;
+}
+
+main .columns-featured .columns-featured-content > p:last-child a:any-link,
+main .columns-featured .columns-featured-content a.button:any-link {
+  display: inline-block;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 14px 35px;
+  background-color: #ffea00;
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+main .columns-featured .columns-featured-content > p:last-child a:any-link:hover,
+main .columns-featured .columns-featured-content > p:last-child a:any-link:focus-visible,
+main .columns-featured .columns-featured-content a.button:any-link:hover,
+main .columns-featured .columns-featured-content a.button:any-link:focus-visible {
+  background-color: #ffea00;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+@media (width >= 900px) {
+  .columns-featured > div {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .columns-featured > div > .columns-featured-img-col {
+    flex: 0 0 62%;
+    order: unset;
+  }
+
+  .columns-featured > div > .columns-featured-content {
+    flex: 0 0 38%;
+    order: unset;
+    padding: 63px 36px 36px;
+  }
+}

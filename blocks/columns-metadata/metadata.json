@@ -1,0 +1,40 @@
+{
+  "variantName": "columns-metadata",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-09-05T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/us/en/adventures/bali-surf-camp.html",
+    "originPage": "adventure detail page (Bali Surf Camp)",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "metadata",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "repeating label/value attribute pairs (text only)",
+    "buttonCount": 0,
+    "imageCount": 0,
+    "itemCount": 6
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "adventure/product attribute panels (activity, length, group size, difficulty, price)",
+      "text-only key/value metadata sidebars",
+      "spec sheets displayed as label-over-value pairs"
+    ],
+    "notSuitableFor": [
+      "image + heading + description feature callouts (use columns-featured)",
+      "repeating teaser cards linking to detail pages (use cards-teaser)",
+      "rotating image banners (use carousel-gallery)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/us/en/adventures/bali-surf-camp"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-05T00:00:00.000Z"
+  }
+}

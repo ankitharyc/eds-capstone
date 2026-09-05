@@ -1,0 +1,51 @@
+/* columns-metadata -- WKND adventure attribute panel
+   Source: content fragment element list (label above value, left divider bar).
+   Values extracted from source computed styles. */
+
+.columns-metadata {
+  margin: 18px 0;
+}
+
+/* Each label/value pair: left divider bar + indent */
+.columns-metadata > div {
+  margin-bottom: 22.5px;
+  padding-left: 18px;
+  border-left: 5px solid #ebebeb;
+}
+
+.columns-metadata > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Label (top) */
+.columns-metadata > div > .columns-metadata-label,
+.columns-metadata > div > .columns-metadata-label p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: #696969;
+}
+
+/* Value (bottom) */
+.columns-metadata > div > .columns-metadata-value,
+.columns-metadata > div > .columns-metadata-value p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+/* small gap between label and value (source: dt pt 12 + dd pt 7) */
+.columns-metadata > div > .columns-metadata-label {
+  padding-top: 12px;
+}
+
+.columns-metadata > div > .columns-metadata-value {
+  padding-top: 7px;
+}

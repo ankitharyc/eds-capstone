@@ -1,0 +1,94 @@
+/*
+ * accordion-faq
+ * Visual design migrated from wknd.site/us/en/faqs.html
+ * Source: AEM Core Components accordion (.cmp-accordion).
+ * Values are exact getComputedStyle extractions; the source "+/−" glyph
+ * comes from a private icon font (wknd-icon-font) so it is recreated in CSS.
+ */
+
+.accordion-faq {
+  margin: 0;
+}
+
+/* accordion item — no card border/radius in source; items stack flush */
+.accordion-faq .accordion-faq-item {
+  border: 0;
+  margin: 0;
+}
+
+/* header row (clickable question) */
+.accordion-faq .accordion-faq-item-label {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 13px 40px 13px 13px;
+  border-bottom: 2px solid #ebebeb;
+  list-style: none;
+  cursor: pointer;
+}
+
+.accordion-faq .accordion-faq-item-label::-webkit-details-marker {
+  display: none;
+}
+
+/* question title — source renders uppercase Source Sans Pro 600, pure black */
+.accordion-faq .accordion-faq-item-label h3 {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* +/− toggle icon (recreated: two bars, right-aligned, ~16px, black) */
+.accordion-faq .accordion-faq-item-label::before,
+.accordion-faq .accordion-faq-item-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  background-color: #000;
+  transform: translateY(-50%);
+  transition: opacity 0.2s ease;
+}
+
+/* horizontal bar */
+.accordion-faq .accordion-faq-item-label::before {
+  right: 13px;
+  width: 16px;
+  height: 2px;
+}
+
+/* vertical bar (hidden when open to form a minus) */
+.accordion-faq .accordion-faq-item-label::after {
+  right: 20px;
+  width: 2px;
+  height: 16px;
+}
+
+.accordion-faq .accordion-faq-item[open] .accordion-faq-item-label::after {
+  opacity: 0;
+}
+
+/* answer panel */
+.accordion-faq .accordion-faq-item-body {
+  padding: 7px 0 0 7px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--text-color);
+}
+
+.accordion-faq .accordion-faq-item-body p {
+  margin: 0 0 13.5px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-color);
+}
+
+/* neutralize any empty/authored headings that landed inside answer bodies */
+.accordion-faq .accordion-faq-item-body h3 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.75;
+}
