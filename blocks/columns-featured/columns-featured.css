@@ -106,11 +106,15 @@ main .columns-featured .columns-featured-content a.button:any-link:focus-visible
   .columns-featured > div > .columns-featured-img-col {
     flex: 0 0 62%;
     order: unset;
+    box-sizing: border-box;
+    min-width: 0;
   }
 
   .columns-featured > div > .columns-featured-content {
     flex: 0 0 38%;
     order: unset;
+    box-sizing: border-box;
+    min-width: 0;
     padding: 63px 36px 36px;
   }
 }
