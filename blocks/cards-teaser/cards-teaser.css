@@ -2,6 +2,35 @@
    Values extracted from ul.cmp-image-list on wknd.site. Reused across homepage,
    adventure-listing, and content-landing, so kept general (mobile-first, auto-fill grid). */
 
+/* category filter tab strip (adventures listing only) */
+.cards-teaser .cards-teaser-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 0 0 32px;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.cards-teaser .cards-teaser-tab {
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  margin: 0;
+  padding: 12px 4px;
+  font: inherit;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #767676;
+  cursor: pointer;
+}
+
+.cards-teaser .cards-teaser-tab[aria-selected='true'] {
+  color: var(--text-color);
+  border-bottom-color: #ffea00;
+}
+
 .cards-teaser ul {
   list-style: none;
   margin: 0;
@@ -9,6 +38,10 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 32px;
+}
+
+.cards-teaser ul > li[hidden] {
+  display: none;
 }
 
 .cards-teaser ul > li {
@@ -42,13 +75,16 @@
   margin: 0;
 }
 
-/* title link — blue (brand link color via global a:any-link), regular weight, own line */
+/* title link — black, bold, uppercase, own line (matches WKND teaser cards) */
 .cards-teaser .cards-teaser-card-body a {
   display: block;
   margin-bottom: 8px;
   font-size: 18px;
   line-height: 27px;
-  font-weight: 400;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-color);
   text-decoration: none;
 }
 
