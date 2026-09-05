@@ -50,6 +50,12 @@ header nav .nav-hamburger {
   align-items: center;
 }
 
+/* keep the toggle above the open drawer so it can be tapped to close */
+header nav[aria-expanded='true'] .nav-hamburger {
+  position: relative;
+  z-index: 6;
+}
+
 header nav .nav-hamburger button {
   height: 22px;
   width: 26px;
@@ -87,6 +93,30 @@ header nav .nav-hamburger-icon::before {
 header nav .nav-hamburger-icon::after {
   top: 7px;
   width: 14px;
+}
+
+/* morph to a white × when the drawer is open (visible over the dark panel) */
+header nav[aria-expanded='true'] .nav-hamburger button {
+  color: #ebebeb;
+}
+
+header nav[aria-expanded='true'] .nav-hamburger-icon {
+  background: transparent;
+}
+
+header nav[aria-expanded='true'] .nav-hamburger-icon::before,
+header nav[aria-expanded='true'] .nav-hamburger-icon::after {
+  top: 0;
+  width: 22px;
+  background: #ebebeb;
+}
+
+header nav[aria-expanded='true'] .nav-hamburger-icon::before {
+  transform: rotate(45deg);
+}
+
+header nav[aria-expanded='true'] .nav-hamburger-icon::after {
+  transform: rotate(-45deg);
 }
 
 /* ---- Brand ---- */
@@ -270,8 +300,19 @@ header nav ul.nav-locale-list a {
     padding: 20px 40px;
   }
 
+  /* sticky the whole header on scroll; the global `header { height: 64px }`
+     would otherwise cap the sticky containing block, so let it size to content
+     and make the header element itself sticky. */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: auto;
+  }
+
   header .nav-wrapper {
     padding-top: 45px;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 10%);
   }
 
   header nav .nav-hamburger {
