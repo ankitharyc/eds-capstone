@@ -42,13 +42,16 @@
   margin: 0;
 }
 
-/* title link — blue (brand link color via global a:any-link), regular weight, own line */
+/* title link — black, bold, uppercase, own line (matches WKND teaser cards) */
 .cards-teaser .cards-teaser-card-body a {
   display: block;
   margin-bottom: 8px;
   font-size: 18px;
   line-height: 27px;
-  font-weight: 400;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-color);
   text-decoration: none;
 }
 

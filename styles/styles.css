@@ -342,3 +342,33 @@ main .section.dark {
 main .section.dark a:any-link {
   color: #fff;
 }
+
+/* ---- WKND default-content styling ---- */
+
+/* section headings get a short yellow underline accent (WKND title style) */
+main .default-content-wrapper h2,
+main .default-content-wrapper h3 {
+  padding-bottom: 12px;
+  border-bottom: 3px solid #ffea00;
+  display: table; /* underline hugs the text width */
+}
+
+/* a lone link in its own paragraph renders as a WKND yellow CTA button */
+/* stylelint-disable-next-line no-descending-specificity */
+main .default-content-wrapper p > a:only-child {
+  display: inline-block;
+  background-color: #ffea00;
+  color: #202020;
+  padding: 14px 35px;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+main .default-content-wrapper p > a:only-child:hover {
+  background-color: #202020;
+  color: #ffea00;
+  text-decoration: none;
+}
