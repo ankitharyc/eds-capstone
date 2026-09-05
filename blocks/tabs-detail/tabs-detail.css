@@ -1,6 +1,79 @@
 /* tabs-detail — visual design migrated from WKND cmp-tabs (adventure trip details).
    Values extracted from source computed styles. See migration-work/tabs-detail-extracted.css */
 
+/* ---- adventure-detail two-column layout ----
+   The adventure detail template renders one section containing (in order):
+   carousel-gallery, H1, columns-metadata, "Share this Adventure" h5, tabs-detail.
+   WKND lays this out as: full-width carousel + title on top, then a left sidebar
+   (metadata + share) beside the tabs in a wide right column. */
+
+/* title gets the WKND yellow underline accent */
+main .section.tabs-detail-container.columns-metadata-container > .default-content-wrapper h1 {
+  padding-bottom: 12px;
+  border-bottom: 3px solid #ffea00;
+  display: table; /* underline hugs the text width */
+}
+
+/* "Share this Adventure" — small uppercase label in the sidebar, not a serif heading */
+main .section.tabs-detail-container.columns-metadata-container > .default-content-wrapper h5 {
+  margin: 24px 0 0;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+@media (width >= 900px) {
+  main .section.tabs-detail-container.columns-metadata-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    column-gap: 40px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 32px;
+  }
+
+  /* the section itself is now the centered container; reset the per-wrapper
+     max-width/margin/padding so the grid controls alignment */
+  main .section.tabs-detail-container.columns-metadata-container > div {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* full-width rows: carousel then title */
+  main .section.tabs-detail-container.columns-metadata-container > .carousel-gallery-wrapper {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  main .section.tabs-detail-container.columns-metadata-container > .default-content-wrapper:has(h1) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-bottom: 8px;
+  }
+
+  /* left sidebar: metadata panel then the "Share this Adventure" heading */
+  main .section.tabs-detail-container.columns-metadata-container > .columns-metadata-wrapper {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  main .section.tabs-detail-container.columns-metadata-container > .default-content-wrapper:has(h5) {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  /* right main column: the tabs span alongside the stacked sidebar items */
+  main .section.tabs-detail-container.columns-metadata-container > .tabs-detail-wrapper {
+    grid-column: 2;
+    grid-row: 3 / span 2;
+  }
+}
+
 /* Tab strip (ol.cmp-tabs__tablist -> div[role=tablist]) */
 .tabs-detail .tabs-detail-list {
   display: flex;
