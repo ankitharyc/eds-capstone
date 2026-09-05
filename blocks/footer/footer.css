@@ -8,13 +8,9 @@ footer {
 
 footer .footer-content {
   margin: auto;
-  max-width: 1248px;
-  padding: 16px 24px 24px;
-  text-align: center;
-}
-
-footer .footer-content > div {
-  margin: 0 auto;
+  max-width: 1200px;
+  padding: 24px;
+  text-align: left;
 }
 
 footer p {
@@ -38,57 +34,125 @@ footer ul {
 }
 
 /* brand logo */
+footer .footer-brand p {
+  margin: 0;
+}
+
 footer .footer-brand img {
   width: 128px;
   height: auto;
-  margin: 8px auto;
 }
 
-/* footer nav */
+/* footer nav — vertical stacked list (mobile) */
 footer .footer-nav ul {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 24px;
-  margin: 12px 0;
+  flex-direction: column;
+  gap: 24px;
+  margin: 24px 0;
 }
 
 footer .footer-nav a {
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-size: var(--body-font-size-s);
 }
 
-/* follow us + social */
+/* follow us + social — label above a light icon box, left-aligned (mobile) */
+footer .footer-social {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 24px 0;
+}
+
 footer .footer-social h4 {
-  margin: 16px 0 8px;
+  margin: 0;
+  font-family: var(--body-font-family);
   font-size: var(--body-font-size-s);
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  white-space: nowrap;
+  color: #ebebeb;
 }
 
 footer .footer-social ul {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 8px 0;
+  align-items: center;
+  gap: 24px;
+  background-color: #f2f2f2;
+  padding: 16px 24px;
 }
 
-/* legal / credits */
+footer .footer-social ul img {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+footer .footer-social a:hover {
+  opacity: 0.7;
+}
+
+/* legal / credits — full-width block below (no divider on mobile) */
 footer .footer-legal {
-  border-top: 1px solid rgb(255 255 255 / 15%);
   margin-top: 16px;
-  padding-top: 16px;
-  max-width: 900px;
   font-size: var(--body-font-size-xs);
   color: rgb(235 235 235 / 80%);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 footer .footer-legal a {
   text-decoration: underline;
 }
 
+/* ---- Desktop: single-row top band (brand | nav | social), left-aligned ---- */
 @media (width >= 900px) {
   footer .footer-content {
-    padding: 24px 32px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'brand nav social'
+      'legal legal legal';
+    align-items: center;
+    column-gap: 48px;
+    padding: 32px 40px;
+  }
+
+  footer .footer-brand {
+    grid-area: brand;
+  }
+
+  footer .footer-nav {
+    grid-area: nav;
+  }
+
+  footer .footer-nav ul {
+    flex-flow: row wrap;
+    margin: 0;
+    gap: 40px;
+  }
+
+  footer .footer-nav a {
+    font-size: var(--body-font-size-xs);
+  }
+
+  footer .footer-social {
+    grid-area: social;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+  }
+
+  footer .footer-social h4 {
+    font-size: var(--body-font-size-xs);
+  }
+
+  footer .footer-legal {
+    grid-area: legal;
+    border-top: 1px solid rgb(255 255 255 / 15%);
+    margin-top: 24px;
+    padding-top: 16px;
   }
 }
