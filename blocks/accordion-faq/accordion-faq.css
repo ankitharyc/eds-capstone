@@ -10,6 +10,61 @@
   margin: 0;
 }
 
+/* ---- FAQs two-column layout ----
+   The FAQs section holds (in order): a default-content block (title + image +
+   intro), the accordion, and a "Need more help?" default-content block. WKND
+   lays this out as a wide main column (title/image/intro + accordion) beside a
+   narrow "Need more help?" sidebar aligned to the top-right. */
+@media (width >= 900px) {
+  main .section.accordion-faq-container {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    column-gap: 64px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 32px;
+  }
+
+  /* the section is now the centered container; reset per-wrapper max-width */
+  main .section.accordion-faq-container > div {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* left main column: title/image/intro (row 1) then the accordion (row 2) */
+  main .section.accordion-faq-container > .default-content-wrapper:has(h1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  main .section.accordion-faq-container > .accordion-faq-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* right sidebar: the "Need more help?" block spans both rows, pinned top */
+  main .section.accordion-faq-container > .default-content-wrapper:not(:has(h1)) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+/* FAQs title gets the WKND yellow underline accent */
+main .section.accordion-faq-container > .default-content-wrapper h1 {
+  padding-bottom: 12px;
+  border-bottom: 3px solid #ffea00;
+  display: table; /* underline hugs the text width */
+}
+
+/* "Need more help?" heading is a plain serif heading (no yellow underline) */
+main .section.accordion-faq-container > .default-content-wrapper:not(:has(h1)) h3 {
+  padding-bottom: 0;
+  border-bottom: 0;
+  display: block;
+}
+
 /* accordion item — no card border/radius in source; items stack flush */
 .accordion-faq .accordion-faq-item {
   border: 0;
@@ -32,6 +87,7 @@
 }
 
 /* question title — source renders uppercase Source Sans Pro 600, pure black */
+/* stylelint-disable-next-line no-descending-specificity */
 .accordion-faq .accordion-faq-item-label h3 {
   margin: 0;
   font-family: var(--body-font-family);
@@ -87,6 +143,7 @@
 }
 
 /* neutralize any empty/authored headings that landed inside answer bodies */
+/* stylelint-disable-next-line no-descending-specificity */
 .accordion-faq .accordion-faq-item-body h3 {
   margin: 0;
   font-size: 16px;
