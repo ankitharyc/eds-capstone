@@ -44,5 +44,18 @@ export default function transform(hookName, element, payload) {
 
     // Stray empty <meta> tags emitted inside cmp-image blocks (e.g. lines 183, 204).
     element.querySelectorAll('meta').forEach((el) => el.remove());
+
+    // Normalize internal links: strip the .html extension so URLs are clean
+    // (e.g. /us/en/adventures.html -> /us/en/adventures). Only same-site,
+    // root-relative WKND links; external URLs and anchors are left untouched.
+    element.querySelectorAll('a[href]').forEach((a) => {
+      const href = a.getAttribute('href');
+      if (!href) return;
+      if (/^https?:\/\/(www\.)?wknd\.site\/(.+)\.html($|[?#])/.test(href)) {
+        a.setAttribute('href', href.replace(/^https?:\/\/(www\.)?wknd\.site/, '').replace(/\.html($|[?#])/, '$1'));
+      } else if (/^\/[^/].*\.html($|[?#])/.test(href)) {
+        a.setAttribute('href', href.replace(/\.html($|[?#])/, '$1'));
+      }
+    });
   }
 }
