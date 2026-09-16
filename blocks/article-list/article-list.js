@@ -8,17 +8,57 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
  *   | index        | /query-index.json  |
  *   | filter       | /us/en/magazine/   |
  *   | page-size    | 10                 |
+ *   | tabs         | adventures         |  (optional)
  *
  * Reads the query index, keeps entries whose path starts with `filter`
  * (excluding the filter root itself), and renders `page-size` cards at a time
  * with a "Load more" button. Card markup mirrors the cards-teaser block so the
- * two share styling.
+ * two share styling. When `tabs` names a known taxonomy, a category tab strip
+ * is shown above the grid and filters the entries (each tab re-paginates).
  */
 
 const DEFAULTS = {
   index: '/query-index.json',
   filter: '',
   'page-size': 10,
+  tabs: '',
+};
+
+/**
+ * Category taxonomies for optional tab filtering, keyed by taxonomy name (the
+ * `tabs` config value). Each maps an entry slug (last path segment) to the
+ * categories it belongs to. Mirrors the WKND adventures source filter.
+ */
+const TAXONOMIES = {
+  adventures: {
+    order: ['all', 'climbing', 'cycling', 'skiing', 'surfing', 'travel'],
+    labels: {
+      all: 'All',
+      climbing: 'Climbing',
+      cycling: 'Cycling',
+      skiing: 'Skiing',
+      surfing: 'Surfing',
+      travel: 'Travel',
+    },
+    slugs: {
+      'climbing-new-zealand': ['climbing'],
+      'colorado-rock-climbing': ['climbing'],
+      'cycling-southern-utah': ['cycling'],
+      'cycling-tuscany': ['cycling', 'travel'],
+      'west-coast-cycling': ['cycling'],
+      'whistler-mountain-biking': ['cycling'],
+      'downhill-skiing-wyoming': ['skiing'],
+      'ski-touring-mont-blanc': ['skiing'],
+      'tahoe-skiing': ['skiing'],
+      'bali-surf-camp': ['surfing'],
+      'surf-camp-costa-rica': ['surfing'],
+      'beervana-portland': ['travel'],
+      'gastronomic-marais-tour': ['travel'],
+      'napa-wine-tasting': ['travel'],
+      'riverside-camping-australia': ['travel'],
+      'yosemite-backpacking': ['travel'],
+    },
+  },
 };
 
 /* read the key/value config rows the author entered */
@@ -80,34 +120,72 @@ function renderCard(entry) {
   return li;
 }
 
+/* the last path segment, used to look an entry up in a taxonomy */
+function slugOf(entry) {
+  return (entry.path || '').replace(/\/$/, '').split('/').pop();
+}
+
+/* build the category tab strip and wire it to re-render the (filtered) list */
+function buildTabs(taxonomy, entries, render) {
+  const tablist = document.createElement('div');
+  tablist.className = 'article-list-tabs';
+  tablist.setAttribute('role', 'tablist');
+
+  taxonomy.order.forEach((cat, idx) => {
+    const tab = document.createElement('button');
+    tab.type = 'button';
+    tab.className = 'article-list-tab';
+    tab.textContent = taxonomy.labels[cat];
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+    tab.addEventListener('click', () => {
+      tablist.querySelectorAll('.article-list-tab').forEach((t) => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+      const filtered = cat === 'all'
+        ? entries
+        : entries.filter((e) => (taxonomy.slugs[slugOf(e)] || []).includes(cat));
+      render(filtered);
+    });
+    tablist.append(tab);
+  });
+
+  return tablist;
+}
+
 export default function decorate(block) {
   const config = readConfig(block);
+  const taxonomy = TAXONOMIES[config.tabs.toLowerCase()];
   block.textContent = '';
 
   const ul = document.createElement('ul');
-  block.append(ul);
-
   const more = document.createElement('button');
   more.className = 'article-list-more';
   more.type = 'button';
   more.textContent = 'Load more';
 
+  const pageSize = config['page-size'];
+  let showNext = () => {};
+  more.addEventListener('click', () => showNext());
+
+  // (re)render a set of entries from scratch with load-more pagination
+  const render = (list) => {
+    ul.textContent = '';
+    more.remove();
+    let shown = 0;
+    showNext = () => {
+      list.slice(shown, shown + pageSize).forEach((e) => ul.append(renderCard(e)));
+      shown += pageSize;
+      if (shown >= list.length) more.remove();
+    };
+    showNext();
+    if (list.length > pageSize) block.append(more);
+  };
+
   loadEntries(config)
     .then((entries) => {
-      let shown = 0;
-      const pageSize = config['page-size'];
-
-      const showNext = () => {
-        entries.slice(shown, shown + pageSize).forEach((e) => ul.append(renderCard(e)));
-        shown += pageSize;
-        if (shown >= entries.length) more.remove();
-      };
-
-      showNext();
-      if (entries.length > pageSize) {
-        more.addEventListener('click', showNext);
-        block.append(more);
-      }
+      if (taxonomy) block.append(buildTabs(taxonomy, entries, render));
+      block.append(ul);
+      render(entries);
     })
     .catch((error) => {
       // eslint-disable-next-line no-console
