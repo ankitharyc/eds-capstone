@@ -9,6 +9,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
  *   | filter       | /us/en/magazine/   |
  *   | page-size    | 10                 |
  *   | tabs         | adventures         |  (optional)
+ *   | load-more    | false              |  (optional; default true)
  *
  * Reads the query index, keeps entries whose path starts with `filter`
  * (excluding the filter root itself), and renders `page-size` cards at a time
@@ -22,6 +23,7 @@ const DEFAULTS = {
   filter: '',
   'page-size': 10,
   tabs: '',
+  'load-more': 'true',
 };
 
 /**
@@ -164,13 +166,19 @@ export default function decorate(block) {
   more.textContent = 'Load more';
 
   const pageSize = config['page-size'];
+  const loadMore = String(config['load-more']).toLowerCase() !== 'false';
   let showNext = () => {};
   more.addEventListener('click', () => showNext());
 
-  // (re)render a set of entries from scratch with load-more pagination
+  // (re)render a set of entries from scratch. With load-more off, show only the
+  // first page and no button (a fixed teaser row); otherwise paginate.
   const render = (list) => {
     ul.textContent = '';
     more.remove();
+    if (!loadMore) {
+      list.slice(0, pageSize).forEach((e) => ul.append(renderCard(e)));
+      return;
+    }
     let shown = 0;
     showNext = () => {
       list.slice(shown, shown + pageSize).forEach((e) => ul.append(renderCard(e)));
