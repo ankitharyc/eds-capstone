@@ -1,0 +1,94 @@
+/* article-list — dynamic card grid (query-index backed).
+   Shares the WKND image-list teaser look with cards-teaser: image on top,
+   uppercase black title, uppercase grey description. */
+
+.article-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.article-list ul > li {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* image cell: uniform cover crop (source rendered 260x200 ≈ 13/10) */
+.article-list .article-list-card-image {
+  line-height: 0;
+}
+
+.article-list .article-list-card-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 13 / 10;
+  object-fit: cover;
+}
+
+/* text cell: title link + description, uppercase grey (matches cards-teaser) */
+.article-list .article-list-card-body {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 21px;
+  text-transform: uppercase;
+  color: #696969;
+}
+
+/* title link — black, bold, uppercase, own line */
+.article-list .article-list-card-body a {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.article-list .article-list-card-body a:hover {
+  text-decoration: underline;
+}
+
+/* Load more button — WKND yellow CTA */
+.article-list .article-list-more {
+  display: block;
+  margin: 40px auto 0;
+  border: 0;
+  padding: 14px 35px;
+  background-color: #ffea00;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.article-list .article-list-more:hover {
+  background-color: var(--text-color);
+  color: #ffea00;
+}
+
+/* tablet: two columns */
+@media (width >= 600px) {
+  .article-list ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 14px;
+  }
+}
+
+/* desktop: 4-up auto-fill grid */
+@media (width >= 900px) {
+  .article-list ul {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 32px 14px;
+  }
+}
